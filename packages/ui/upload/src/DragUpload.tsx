@@ -38,6 +38,7 @@ export const DragUpload = forwardRef<HTMLDivElement | null, UploadProps>(
       onChange,
       beforeUpload,
       customUpload,
+      fileListRender,
       method,
       ...rest
     },
@@ -144,14 +145,18 @@ export const DragUpload = forwardRef<HTMLDivElement | null, UploadProps>(
             children
           )}
         </FileSelect>
-        {showUploadList && _fileList.length > 0 && (
-          <FileList
-            fileList={_fileList}
-            onDelete={deleteFile}
-            onDownload={onDownload}
-            prefixCls={prefixCls}
-          />
-        )}
+        {showUploadList &&
+          _fileList.length > 0 &&
+          (fileListRender ? (
+            fileListRender({ fileList: _fileList, onDelete: deleteFile, onDownload: onDownload })
+          ) : (
+            <FileList
+              fileList={_fileList}
+              onDelete={deleteFile}
+              onDownload={onDownload}
+              prefixCls={prefixCls}
+            />
+          ))}
       </div>
     )
   }

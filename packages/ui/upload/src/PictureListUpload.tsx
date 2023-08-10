@@ -38,6 +38,7 @@ export const PictureListUpload = forwardRef<HTMLDivElement | null, UploadProps>(
       onChange,
       beforeUpload,
       customUpload,
+      fileListRender,
       method,
       ...rest
     },
@@ -87,15 +88,19 @@ export const PictureListUpload = forwardRef<HTMLDivElement | null, UploadProps>(
           )}
         </FileSelect>
         {tips && <div className={`${prefixCls}__tips`}>{tips}</div>}
-        {showUploadList && _fileList.length > 0 && (
-          <FileList
-            fileList={_fileList}
-            onDelete={deleteFile}
-            onDownload={onDownload}
-            showPic
-            prefixCls={prefixCls}
-          />
-        )}
+        {showUploadList &&
+          _fileList.length > 0 &&
+          (fileListRender ? (
+            fileListRender({ fileList: _fileList, onDelete: deleteFile, onDownload: onDownload })
+          ) : (
+            <FileList
+              fileList={_fileList}
+              onDelete={deleteFile}
+              onDownload={onDownload}
+              showPic
+              prefixCls={prefixCls}
+            />
+          ))}
       </div>
     )
   }

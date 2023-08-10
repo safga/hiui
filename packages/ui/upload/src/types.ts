@@ -174,9 +174,19 @@ export interface UploadProps extends HiBaseHTMLProps<'div'> {
    * 操作区自定义渲染，暂仅在 type="default" 下有效
    */
   actionRender?: (props: ActionRenderProps) => React.ReactNode
+  /**
+   * 文件列表自定义渲染，暂仅在 type="default" 和 type === 'drag' 和 type === 'pictureCard' 下有效
+   */
+  fileListRender?: (props: FileListRenderProps) => React.ReactNode
 }
 
 export interface ActionRenderProps {
   file: UploadFileItem
   index: number
+}
+
+export interface FileListRenderProps {
+  fileList: UploadFileItem[]
+  onDelete: (file: UploadFileItem, index: any) => void
+  onDownload?: (file: UploadFileItem) => void
 }

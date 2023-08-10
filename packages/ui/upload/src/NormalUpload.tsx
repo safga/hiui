@@ -41,6 +41,7 @@ export const NormalUpload = forwardRef<HTMLDivElement | null, UploadProps>(
       beforeUpload,
       customUpload,
       actionRender,
+      fileListRender,
       method,
       ...rest
     },
@@ -91,15 +92,19 @@ export const NormalUpload = forwardRef<HTMLDivElement | null, UploadProps>(
           )}
         </FileSelect>
         {tips && <div className={`${prefixCls}__tips`}>{tips}</div>}
-        {showUploadList && _fileList.length > 0 && (
-          <FileList
-            fileList={_fileList}
-            onDelete={deleteFile}
-            onDownload={onDownload}
-            prefixCls={prefixCls}
-            actionRender={actionRender}
-          />
-        )}
+        {showUploadList &&
+          _fileList.length > 0 &&
+          (fileListRender ? (
+            fileListRender({ fileList: _fileList, onDelete: deleteFile, onDownload: onDownload })
+          ) : (
+            <FileList
+              fileList={_fileList}
+              onDelete={deleteFile}
+              onDownload={onDownload}
+              prefixCls={prefixCls}
+              actionRender={actionRender}
+            />
+          ))}
       </div>
     )
   }
